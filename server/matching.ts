@@ -372,6 +372,7 @@ export async function getDiscoveryState(db: Database, userId: string) {
 		return {
 			requiresOnboarding: true,
 			candidate: null,
+			preloadCandidates: [],
 		};
 	}
 
@@ -381,16 +382,27 @@ export async function getDiscoveryState(db: Database, userId: string) {
 		return {
 			requiresOnboarding: false,
 			candidate: null,
+			preloadCandidates: [],
 		};
 	}
 
-	const asset = assets[me.discoveryCursor % assets.length];
-	const variantIndex = Math.floor(me.discoveryCursor / assets.length);
-	const snapshot = buildGeneratedCandidateSnapshot(asset, variantIndex);
+	const buildCandidateAtCursor = (cursor: number) => {
+		const asset = assets[cursor % assets.length];
+		const variantIndex = Math.floor(cursor / assets.length);
+		const snapshot = buildGeneratedCandidateSnapshot(asset, variantIndex);
+
+		return toGeneratedPublicProfile(snapshot);
+	};
+
+	const candidate = buildCandidateAtCursor(me.discoveryCursor);
+	const preloadCandidates = [1, 2].map((offset) =>
+		buildCandidateAtCursor(me.discoveryCursor + offset),
+	);
 
 	return {
 		requiresOnboarding: false,
-		candidate: toGeneratedPublicProfile(snapshot),
+		candidate,
+		preloadCandidates,
 	};
 }
 
