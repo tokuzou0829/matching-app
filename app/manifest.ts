@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "スパーク",
-		short_name: "スパーク",
+		name: "LOVE MATCH",
+		short_name: "LOVE MATCH",
 		description:
-			"無限のとくぞうをスワイプできるスマホネイティブなマッチングアプリ。",
+			"とくぞうと新しい生活を始めるマッチングアプリ。あなたの好みに合わせて無限のとくぞうが流れます。さあ、スワイプしてとくぞうを見つけましょう。",
 		start_url: "/",
 		display: "standalone",
 		background_color: "#f4ede5",

@@ -17,8 +17,9 @@ const serif = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-	title: "スパーク | とくぞう専用マッチング",
-	description: "無限のとくぞうと出会える、スマホネイティブなマッチングアプリ。",
+	title: "LOVE MATCH | とくぞう専用マッチング",
+	description:
+		"とくぞうと新しい生活を始めるマッチングアプリ。あなたの好みに合わせて無限のとくぞうが流れます。さあ、スワイプしてとくぞうを見つけましょう。",
 };
 
 export const viewport: Viewport = {
