@@ -85,6 +85,7 @@ type MatchMoment = {
 type DiscoveryResponse = {
 	requiresOnboarding: boolean;
 	candidate: DiscoveredCandidate | null;
+	preloadCandidates: DiscoveredCandidate[];
 };
 
 type DiscoveredCandidate = PublicProfile & { candidateId: string };
@@ -117,6 +118,9 @@ export function MatchingApp() {
 	const [tab, setTab] = useState<Tab>("discover");
 	const [profile, setProfile] = useState<MyProfile | null>(null);
 	const [candidate, setCandidate] = useState<DiscoveredCandidate | null>(null);
+	const [preloadCandidates, setPreloadCandidates] = useState<
+		DiscoveredCandidate[]
+	>([]);
 	const [matches, setMatches] = useState<MatchSummary[]>([]);
 	const [activeChat, setActiveChat] = useState<ChatState | null>(null);
 	const [profileForm, setProfileForm] =
@@ -202,6 +206,7 @@ export function MatchingApp() {
 			setProfile(profileData.profile);
 			syncFormFromProfile(profileData.profile);
 			syncCandidate(discoveryData.candidate);
+			setPreloadCandidates(discoveryData.preloadCandidates ?? []);
 			setMatches(matchesData.matches);
 
 			if (profileData.profile) {
@@ -222,6 +227,7 @@ export function MatchingApp() {
 		if (!session?.user) {
 			setProfile(null);
 			syncCandidate(null);
+			setPreloadCandidates([]);
 			setMatches([]);
 			setActiveChat(null);
 			setActiveCandidateProfile(null);
@@ -278,6 +284,19 @@ export function MatchingApp() {
 			window.clearTimeout(timeoutId);
 		};
 	}, [matchMoment]);
+
+	useEffect(() => {
+		for (const nextCandidate of preloadCandidates.slice(0, 2)) {
+			const imageUrl =
+				nextCandidate.primaryPhotoUrl ?? nextCandidate.photos[0]?.url ?? null;
+			if (!imageUrl) {
+				continue;
+			}
+
+			const image = new window.Image();
+			image.src = imageUrl;
+		}
+	}, [preloadCandidates]);
 
 	const handleProfileSave = async () => {
 		setIsSavingProfile(true);
