@@ -25,7 +25,7 @@ export const getUserOrThrow = async (c: Context) => {
 	const session = c.get("session");
 
 	if (!user || !session) {
-		throw new HTTPException(401, { message: "Unauthorized" });
+		throw new HTTPException(401, { message: "ログインが必要です。" });
 	}
 
 	return { user, session };

@@ -1,49 +1,52 @@
-# Next Tokuzou Kit
+# Spark
 
-Secure API playground built with Next.js App Router, Hono, Better Auth, Drizzle, PostgreSQL, and R2.
+Smartphone-first matching app built with Next.js App Router, Hono, Better Auth, Drizzle, PostgreSQL, and R2.
 
-## Features
+## What It Does
 
-- Email/password signup and login with Better Auth.
-- Protected API endpoints (`/api/auth/me`, `/api/auth/secure-message`).
-- Secure message workflow that stores text files in R2 and metadata in PostgreSQL.
-- Web Push subscription management and test delivery (`/api/notifications/*`).
+- Email/password signup and login.
+- Smartphone-native matching UI with Tinder-like swipe gestures, match state, and chat.
+- Infinite Tokuzou generation from gender-specific image pools managed in the admin upload page.
+- Dedicated admin upload page protected by `ADMIN_PASS`.
+- Tokuzou image uploads stored in R2 and tracked in PostgreSQL.
+- User profiles keep a generated placeholder image instead of end-user uploads.
 
-## Tech Stack
+## Main API Routes
 
-- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS v4
-- API: Hono
-- Auth: Better Auth
-- Database: Drizzle ORM + PostgreSQL
-- Storage and Push: Cloudflare R2 (aws4fetch), web-push
-- Tooling: pnpm, Vitest, Biome, ESLint, Prettier, Lefthook
-
-## Requirements
-
-- Node.js `22.14.0` (see `.node-version`)
-- pnpm `10.x`
-- Docker (for local PostgreSQL)
+- `GET /api/profiles/me`
+- `PUT /api/profiles/me`
+- `GET /api/matching/discovery`
+- `POST /api/matching/actions`
+- `GET /api/matching/matches`
+- `POST /api/matching/reset`
+- `GET /api/chats/:matchId/messages`
+- `POST /api/chats/:matchId/messages`
+- `GET /api/admin/session`
+- `POST /api/admin/login`
+- `POST /api/admin/logout`
+- `GET /api/admin/assets`
+- `POST /api/admin/assets`
+- `DELETE /api/admin/assets/:assetId`
 
 ## Setup
 
 ```bash
 cp .env.example .env
 pnpm i
+pnpm db:up
+pnpm db:migrate
 pnpm dev
 ```
 
-`pnpm dev` starts the database, runs Drizzle generate/migrate, and launches Next.js.
-
-## Common Commands
+## Commands
 
 ```bash
 pnpm dev
-pnpm db:down
 pnpm build
-pnpm start
 pnpm test
 pnpm lint
-pnpm fmt
+pnpm db:generate
+pnpm db:migrate
 ```
 
 ## Required Environment Variables
@@ -55,7 +58,6 @@ pnpm fmt
 - `R2_ACCESS_KEY_ID`
 - `R2_SECRET_ACCESS_KEY`
 - `R2_PUBLIC_URL`
+- `ADMIN_PASS`
 - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`
 - `VAPID_PRIVATE_KEY`
-
-See `.env.example` for local defaults.

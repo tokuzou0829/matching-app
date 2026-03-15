@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, type ReactNode, useState } from "react";
 
 import { signInWithEmail } from "@/lib/auth-actions";
 
@@ -24,7 +24,7 @@ export default function LoginPage() {
 		});
 
 		if (!result.success) {
-			setError(result.error ?? "Login failed");
+			setError(result.error ?? "ログインに失敗しました。");
 			setIsLoading(false);
 			return;
 		}
@@ -33,62 +33,84 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="mx-auto flex min-h-[70vh] w-full max-w-md flex-col justify-center">
-			<div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
-				<h1 className="text-2xl font-semibold text-zinc-900">Log in</h1>
-				<p className="mt-2 text-sm text-zinc-500">
-					Access your account and view the secure API demos.
-				</p>
-				<form onSubmit={handleSubmit} className="mt-6 space-y-4">
-					<div className="flex flex-col gap-2">
-						<label
-							className="text-sm font-medium text-zinc-700"
-							htmlFor="email"
-						>
-							Email
-						</label>
+		<div className="native-shell mx-auto flex w-full max-w-md flex-col justify-between px-4 pb-8 pt-6">
+			<div>
+				<Link href="/" className="text-sm font-medium text-[var(--ink-soft)]">
+					← 戻る
+				</Link>
+
+				<div className="mt-8 py-2 text-[var(--ink)]">
+					<p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--ink-soft)]">
+						Welcome Back
+					</p>
+					<h1 className="mt-3 text-5xl leading-[0.92]">
+						続きの
+						<br />
+						スワイプへ。
+					</h1>
+					<p className="mt-4 text-sm leading-7 text-[var(--ink-soft)]">
+						ログインすると、マッチ一覧やチャットの続きがそのまま戻ります。
+					</p>
+				</div>
+			</div>
+
+			<div className="mt-6 border-t border-[var(--line)] pt-6">
+				<form onSubmit={handleSubmit} className="space-y-4">
+					<AuthField label="メールアドレス">
 						<input
-							id="email"
-							type="email"
 							required
+							type="email"
 							value={email}
 							onChange={(event) => setEmail(event.target.value)}
-							className="rounded-xl border border-zinc-200 px-4 py-2 text-sm text-zinc-900 outline-none transition focus:border-zinc-400"
+							className="auth-input"
+							placeholder="spark@example.com"
 						/>
-					</div>
-					<div className="flex flex-col gap-2">
-						<label
-							className="text-sm font-medium text-zinc-700"
-							htmlFor="password"
-						>
-							Password
-						</label>
+					</AuthField>
+
+					<AuthField label="パスワード">
 						<input
-							id="password"
-							type="password"
 							required
+							type="password"
 							value={password}
 							onChange={(event) => setPassword(event.target.value)}
-							className="rounded-xl border border-zinc-200 px-4 py-2 text-sm text-zinc-900 outline-none transition focus:border-zinc-400"
+							className="auth-input"
+							placeholder="••••••••"
 						/>
-					</div>
+					</AuthField>
+
 					<button
 						type="submit"
 						disabled={isLoading}
-						className="w-full rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-70"
+						className="w-full rounded-full bg-[var(--ink)] px-5 py-4 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(15,23,42,0.18)] disabled:opacity-40"
 					>
-						{isLoading ? "Logging in..." : "Log in"}
+						{isLoading ? "ログイン中…" : "ログインする"}
 					</button>
 				</form>
-				{error ? <p className="mt-4 text-sm text-rose-600">{error}</p> : null}
-				<p className="mt-6 text-sm text-zinc-500">
-					New here?{" "}
-					<Link href="/signup" className="font-medium text-zinc-900">
-						Create an account
+
+				{error ? (
+					<p className="mt-4 rounded-[1.4rem] bg-[rgba(213,83,83,0.12)] px-4 py-3 text-sm text-[var(--danger)]">
+						{error}
+					</p>
+				) : null}
+
+				<p className="mt-5 text-sm text-[var(--ink-soft)]">
+					はじめてですか？{" "}
+					<Link href="/signup" className="font-semibold text-[var(--accent)]">
+						新規登録
 					</Link>
-					.
 				</p>
 			</div>
+		</div>
+	);
+}
+
+function AuthField(props: { label: string; children: ReactNode }) {
+	return (
+		<div className="flex flex-col gap-2">
+			<span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-soft)]">
+				{props.label}
+			</span>
+			{props.children}
 		</div>
 	);
 }

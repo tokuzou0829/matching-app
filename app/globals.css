@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
 :root {
-	--background: #ffffff;
-	--foreground: #171717;
+	--page: #ffffff;
+	--page-strong: #f7f7f8;
+	--surface: #ffffff;
+	--surface-strong: #ffffff;
+	--surface-soft: #f8f8f9;
+	--ink: #202124;
+	--ink-soft: #6b7280;
+	--muted: #a0a7b2;
+	--line: rgba(32, 33, 36, 0.08);
+	--accent: #fd5068;
+	--accent-strong: #ff6f61;
+	--accent-soft: rgba(253, 80, 104, 0.1);
+	--like: #25c28a;
+	--pass: #f0b24f;
+	--info: #3f8cff;
+	--danger: #d55353;
+	--font-sans-body: var(--font-sans);
+	--font-display-body: var(--font-display);
 }
 
 @theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
+	--color-background: var(--page);
+	--color-foreground: var(--ink);
+	--font-sans: var(--font-sans-body);
+	--font-mono: var(--font-sans-body);
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
+html {
+	scroll-behavior: smooth;
+	background: var(--page);
+	overscroll-behavior-y: none;
 }
 
 body {
-	background: var(--background);
-	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
+	min-height: 100dvh;
+	background: var(--page);
+	color: var(--ink);
+	font-family: var(--font-sans-body), sans-serif;
+	-webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--font-display-body), serif;
+	letter-spacing: -0.03em;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+button {
+	touch-action: manipulation;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+.auth-input,
+.profile-input,
+.admin-input {
+	width: 100%;
+	border-radius: 1.25rem;
+	border: 1px solid rgba(28, 36, 48, 0.08);
+	background: rgba(255, 255, 255, 0.88);
+	padding: 0.95rem 1rem;
+	color: var(--ink);
+	outline: none;
+	transition:
+		border-color 180ms ease,
+		box-shadow 180ms ease,
+		transform 180ms ease;
+	box-shadow: 0 10px 30px rgba(20, 28, 44, 0.04);
+}
+
+.auth-input:focus,
+.profile-input:focus,
+.admin-input:focus {
+	border-color: rgba(255, 107, 95, 0.45);
+	box-shadow: 0 0 0 4px rgba(255, 107, 95, 0.12);
+	transform: translateY(-1px);
+}
+
+.auth-input::placeholder,
+.profile-input::placeholder,
+.admin-input::placeholder {
+	color: var(--muted);
+}
+
+.native-shell {
+	position: relative;
+	min-height: 100dvh;
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: env(safe-area-inset-bottom);
+}
+
+.glass-panel {
+	border: 1px solid var(--line);
+	background: var(--surface);
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.screen-enter {
+	animation: reveal-up 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-reveal-up {
+	animation: reveal-up 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swipe-card {
+	touch-action: none;
+	user-select: none;
+	will-change: transform;
+	transition:
+		transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+		opacity 240ms ease;
+}
+
+.swipe-card.is-dragging {
+	transition: none;
+	box-shadow: 0 18px 44px rgba(15, 23, 42, 0.14);
+}
+
+.swipe-badge {
+	position: absolute;
+	top: 1.25rem;
+	padding: 0.5rem 0.85rem;
+	border-radius: 999px;
+	border: 2px solid currentColor;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	background: rgba(255, 255, 255, 0.92);
+	box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+}
+
+.swipe-badge.like {
+	left: 1.25rem;
+	color: var(--like);
+	transform: rotate(-8deg);
+}
+
+.swipe-badge.pass {
+	right: 1.25rem;
+	color: var(--pass);
+	transform: rotate(8deg);
+}
+
+.match-burst::before,
+.match-burst::after {
+	content: "";
+	position: absolute;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.18);
+	animation: halo-pulse 2s ease-out infinite;
+}
+
+.match-burst::before {
+	inset: 10% 12% auto;
+	height: 10rem;
+}
+
+.match-burst::after {
+	inset: auto 16% 8%;
+	height: 8rem;
+	animation-delay: 240ms;
+}
+
+@keyframes reveal-up {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes halo-pulse {
+	0% {
+		opacity: 0.12;
+		transform: scale(0.92);
+	}
+	60% {
+		opacity: 0.34;
+		transform: scale(1.08);
+	}
+	100% {
+		opacity: 0.06;
+		transform: scale(1.18);
+	}
 }

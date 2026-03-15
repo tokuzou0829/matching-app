@@ -22,6 +22,27 @@
 			"when": 1769564558352,
 			"tag": "0002_remarkable_plazm",
 			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "7",
+			"when": 1773470019173,
+			"tag": "0003_loving_manta",
+			"breakpoints": true
+		},
+		{
+			"idx": 4,
+			"version": "7",
+			"when": 1773474474874,
+			"tag": "0004_premium_lady_deathstrike",
+			"breakpoints": true
+		},
+		{
+			"idx": 5,
+			"version": "7",
+			"when": 1773572642029,
+			"tag": "0005_special_invaders",
+			"breakpoints": true
 		}
 	]
 }

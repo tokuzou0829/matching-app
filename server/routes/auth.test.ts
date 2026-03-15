@@ -3,7 +3,7 @@ import type { BlobFile, FileId, UploadedFile } from "@/server/objects/file";
 import { setup } from "@/tests/vitest.helper";
 import app from "./auth";
 
-const { mock, createUser, db } = await setup();
+const { createUser } = await setup();
 const { saveBlobFile } = vi.hoisted(() => ({
 	saveBlobFile: vi.fn(),
 }));
@@ -33,7 +33,7 @@ describe("/routes/auth", () => {
 			const json = await response.json();
 			expect(json).toMatchInlineSnapshot(`
 				{
-				  "error": "Unauthorized",
+				  "error": "ログインが必要です。",
 				}
 			`);
 			expect(response.status).toBe(401);
@@ -61,7 +61,7 @@ describe("/routes/auth", () => {
 			const json = await res.json();
 			expect(json).toMatchInlineSnapshot(`
 				{
-				  "message": "Hello Test User, hello",
+				  "message": "Test Userさん、hello",
 				}
 			`);
 			expect(saveBlobFile).toHaveBeenCalledTimes(1);
@@ -84,7 +84,7 @@ describe("/routes/auth", () => {
 			const json = await response.json();
 			expect(json).toMatchInlineSnapshot(`
 				{
-				  "error": "Unauthorized",
+				  "error": "ログインが必要です。",
 				}
 			`);
 			expect(response.status).toBe(401);

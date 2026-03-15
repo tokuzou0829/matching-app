@@ -35,12 +35,12 @@ const factory = () =>
 export const createHonoApp = () => {
 	return factory()
 		.createApp()
-		.notFound((c) => c.json({ error: "Not Found" }, 404))
+		.notFound((c) => c.json({ error: "見つかりません。" }, 404))
 		.onError((error, c) => {
 			if (error instanceof HTTPException) {
 				return error.res ?? c.json({ error: error.message }, error.status);
 			}
 
-			return c.json({ error: "Internal Server Error" }, 500);
+			return c.json({ error: "サーバーエラーが発生しました。" }, 500);
 		});
 };

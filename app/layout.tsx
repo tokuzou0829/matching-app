@@ -1,36 +1,45 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import type { ReactNode } from "react";
 
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const sans = DM_Sans({
+	variable: "--font-sans",
 	subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+const serif = Cormorant_Garamond({
+	variable: "--font-display",
 	subsets: ["latin"],
+	weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-	title: "Next Tokuzou Kit",
-	description: "Next.js + Hono + Better Auth demo",
+	title: "スパーク | とくぞう専用マッチング",
+	description: "無限のとくぞうと出会える、スマホネイティブなマッチングアプリ。",
+};
+
+export const viewport: Viewport = {
+	themeColor: "#ff6b5f",
+	width: "device-width",
+	initialScale: 1,
+	viewportFit: "cover",
 };
 
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="ja">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-zinc-50 text-zinc-900 antialiased`}
+				className={`${sans.variable} ${serif.variable} bg-[var(--page)] text-[var(--ink)] antialiased`}
 			>
 				<SiteHeader />
-				<main className="mx-auto w-full max-w-5xl px-6 py-10">{children}</main>
+				<main className="min-h-screen w-full">{children}</main>
 			</body>
 		</html>
 	);

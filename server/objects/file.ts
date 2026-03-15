@@ -27,9 +27,9 @@ const generateFileId = (): FileId => {
 const fileIdSchema = z.string().uuid().brand("FileId");
 
 export type FileId = z.infer<typeof fileIdSchema>;
-export type FileIdInput = z.input<typeof fileIdSchema>;
+type FileIdInput = z.input<typeof fileIdSchema>;
 
-const FileId = Object.assign(
+export const FileId = Object.assign(
 	(input: FileIdInput): FileId => buildFromZod(fileIdSchema.safeParse(input)),
 	{
 		schema: fileIdSchema,

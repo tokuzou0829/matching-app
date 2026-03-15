@@ -1,7 +1,6 @@
 import type { SendPushNotificationService } from "@/server/infrastructure/repositories/push-notification/interface";
 import type {
 	DeleteSubscriptionByIdService,
-	FindAllSubscriptionsService,
 	FindSubscriptionsByUserIdService,
 	PushSubscriptionRecord,
 } from "@/server/infrastructure/repositories/push-subscription/interface";
@@ -10,30 +9,11 @@ import {
 	type PushNotificationInput,
 } from "@/server/objects/push-notification";
 
-export type SendPushNotificationSummary = {
+type SendPushNotificationSummary = {
 	total: number;
 	sent: number;
 	failed: number;
 	removed: number;
-};
-
-export const createSendPushNotificationToAll = (
-	findAllSubscriptions: FindAllSubscriptionsService,
-	sendPushNotification: SendPushNotificationService,
-	deleteSubscriptionById: DeleteSubscriptionByIdService,
-) => {
-	return async (
-		input: PushNotificationInput,
-	): Promise<SendPushNotificationSummary> => {
-		const payload = PushNotification(input);
-		const subscriptions = await findAllSubscriptions();
-		return sendBatch(
-			subscriptions,
-			payload,
-			sendPushNotification,
-			deleteSubscriptionById,
-		);
-	};
 };
 
 export const createSendPushNotificationToUser = (

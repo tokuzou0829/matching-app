@@ -20,6 +20,7 @@ const staticEnv = z.object({
 	R2_ACCESS_KEY_ID: z.string().min(1),
 	R2_SECRET_ACCESS_KEY: z.string().min(1),
 	R2_PUBLIC_URL: z.url(),
+	ADMIN_PASS: z.string().min(1),
 
 	//push notification
 	NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().min(1),

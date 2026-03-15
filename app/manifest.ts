@@ -2,13 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "NextTokuzouKit PWA",
-		short_name: "TokuzouKit!",
-		description: "NextJSを使用して構築されたフルスタック実装キット",
+		name: "スパーク",
+		short_name: "スパーク",
+		description:
+			"無限のとくぞうをスワイプできるスマホネイティブなマッチングアプリ。",
 		start_url: "/",
 		display: "standalone",
-		background_color: "#ffffff",
-		theme_color: "#000000",
+		background_color: "#f4ede5",
+		theme_color: "#ff6b5f",
 		icons: [
 			{
 				sizes: "192x192",

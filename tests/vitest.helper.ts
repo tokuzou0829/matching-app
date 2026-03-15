@@ -1,4 +1,3 @@
-import { uuidv7 } from "uuidv7";
 import { afterAll, afterEach, vi } from "vitest";
 import * as schema from "@/db/schema";
 import type { auth } from "@/lib/auth";

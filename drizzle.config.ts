@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
-import { createDBUrl } from "@/server/infrastructure/utils/db";
+import { createDBUrl } from "./server/infrastructure/utils/db";
 
 config({ path: ".env" });
 

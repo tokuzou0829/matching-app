@@ -33,11 +33,11 @@ const app = createHonoApp()
 			await secureMessageWorkflow(message, user);
 
 			return c.json({
-				message: `Hello ${user.name ?? user.email}, ${message}`,
+				message: `${user.name ?? user.email}さん、${message}`,
 			});
 		},
 	)
-	.get("/hello", (c) => c.text("Hello, World!"))
+	.get("/hello", (c) => c.text("こんにちは。"))
 	.on(["GET", "POST"], "/*", (c) => auth.handler(c.req.raw));
 
 export default app;
